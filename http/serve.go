@@ -5,6 +5,9 @@ import (
 	"net/http"
 	"time"
 
+	"database/sql"
+	_"github.com/go-sql-driver/mysql"
+
 	limit "github.com/aviddiviner/gin-limit"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -13,6 +16,14 @@ import (
 
 // ServeStart init the serve main function
 func ServeStart() {
+
+	db, err := sql.Open("mysql", "root:0987654321@tcp(127.0.0.1:3306)/golandapiexam")
+	if err != nil {
+		fmt.Println("*****Error DB*****")
+		panic(err)
+	}
+	defer db.Close()
+
 	viper.SetConfigFile("config.json")
 
 	if err := viper.ReadInConfig(); err != nil {
